@@ -16,7 +16,8 @@ public class Etudiant {
         this.moyenne = moyenne;
     }
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String nom;

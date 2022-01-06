@@ -17,31 +17,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 
-<%
-    Etudiant e1 = new Etudiant();
-    e1.setNom("ManuEL").setNbAbsences(1).setMoyenne(12);
-    System.out.println(e1);
 
 
-
-    Groupe g1 = new Groupe();
-    g1.setNom("Simo").add(e1);
-
-    System.out.println(g1);
-
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("bdTest");
-
-    EntityManager em = emf.createEntityManager();
-    EntityTransaction tx = em.getTransaction();
-
-    tx.begin();
-    em.persist(e1);
-    em.persist(g1);
-    tx.commit();
-    em.close();
-    emf.close();
-
-%>
 
 <body>
 
@@ -49,11 +26,22 @@
 
         <table class="table">
 
+            <thead>
+                <tr>
+                    <td>Nom</td>
+                    <td>Prénom</td>
+                    <td>Nombre d'absences</td>
+                    <td>Moyenne</td>
+                    <td>Suppression</td>
+                </tr>
+            </thead>
+
+
+
         </table>
 
-        <p><%= "etudiant 1: " + e1 %></p>
 
-        <%= g1 %>
+        <%= request.getAttributeNames() %>
 
 
 

@@ -1,6 +1,7 @@
 package com.example.projetjavamanu;
 
 import java.io.*;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -9,7 +10,9 @@ import jakarta.servlet.annotation.*;
 public class Controleur extends HttpServlet {
 
 
-    public void init() {}
+    public void init() {
+
+    }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
@@ -20,25 +23,6 @@ public class Controleur extends HttpServlet {
             System.out.println("passage dans create");
             getServletConfig().getServletContext().getRequestDispatcher("/viewCreate.jsp").forward(request, response);
         }
-
-
-        if(action.equals("/destroy")){
-            System.out.println("passage dans destroy");
-        }
-
-
-        else{
-            System.out.println("autre");
-            System.out.println(action);
-        }
-
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-
-        String action =request.getPathInfo();
-        System.out.println(action);
-
         if (action.equals("/save")){
             System.out.println("passage dans save etudiant");
             System.out.println("nom: " + request.getParameter("nom"));
@@ -54,6 +38,30 @@ public class Controleur extends HttpServlet {
             EtudiantDAO.create(e);
 
         }
+
+        if (action.equals("/show")){
+            System.out.println("passage dans show");
+            List<Etudiant> etudiants = EtudiantDAO.getAll();
+
+            // Ajouter les étudiants à la requête pour affichage
+            request.setAttribute("etudiants", etudiants);
+            request.getRequestDispatcher("viewEtudiants.jsp").forward(request, response);
+        }
+
+        if(action.equals("/destroy")){
+            System.out.println("passage dans destroy");
+        }
+
+
+        else{
+            System.out.println("die");
+        }
+
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+
+        doGet(request, response);
 
     }
 
