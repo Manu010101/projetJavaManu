@@ -4,8 +4,10 @@ package com.example.projetjavamanu;
 import jakarta.persistence.*;
 import org.eclipse.persistence.annotations.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class Etudiant {
+public class Etudiant implements Serializable {
 
     public Etudiant(){}
 

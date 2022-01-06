@@ -3,6 +3,7 @@ package com.example.projetjavamanu;
 import java.io.*;
 import java.util.List;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -21,7 +22,9 @@ public class Controleur extends HttpServlet {
 
         if (action.equals("/create")){
             System.out.println("passage dans create");
-            getServletConfig().getServletContext().getRequestDispatcher("/viewCreate.jsp").forward(request, response);
+
+            RequestDispatcher rq = request.getRequestDispatcher("/viewCreate.jsp");
+            rq.forward(request, response);
         }
         if (action.equals("/save")){
             System.out.println("passage dans save etudiant");
@@ -37,6 +40,9 @@ public class Controleur extends HttpServlet {
 
             EtudiantDAO.create(e);
 
+            RequestDispatcher rq = request.getServletContext().getRequestDispatcher("/index.jsp");
+            rq.forward(request, response);
+
         }
 
         if (action.equals("/show")){
@@ -45,11 +51,17 @@ public class Controleur extends HttpServlet {
 
             // Ajouter les étudiants à la requête pour affichage
             request.setAttribute("etudiants", etudiants);
-            request.getRequestDispatcher("viewEtudiants.jsp").forward(request, response);
+            System.out.println("requete: bean" + request);
+            System.out.println("/show etudiants:" + etudiants.toString());
+            request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
         }
 
         if(action.equals("/destroy")){
+
+            int id = Integer.parseInt(request.getParameter("id"));
             System.out.println("passage dans destroy");
+            EtudiantDAO.destroy(id);
+
         }
 
 

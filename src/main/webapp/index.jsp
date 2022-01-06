@@ -46,10 +46,10 @@
 
 
         <div>
-            <a href="do/create" class="btn btn-primary">créer étudiant</a>
-            <a href="do/update" class="btn btn-primary">Modifier étudiant</a>
-            <a href="do/show" class="btn btn-primary">Liste étudiants</a>
-            <a href="do/destroy" class="btn btn-primary">Supprimer étudiant</a>
+            <a href="<%= application.getContextPath()%>/do/create" class="btn btn-primary">créer étudiant</a>
+            <a href="<%= application.getContextPath()%>/do/update" class="btn btn-primary">Modifier étudiant</a>
+            <a href="<%= application.getContextPath()%>/do/show" class="btn btn-primary">Liste étudiants</a>
+            <a href="<%= application.getContextPath()%>/do/destroy" class="btn btn-primary">Supprimer étudiant</a>
         </div>
 
 
