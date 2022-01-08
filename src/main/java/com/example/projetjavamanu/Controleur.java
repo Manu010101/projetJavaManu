@@ -26,6 +26,7 @@ public class Controleur extends HttpServlet {
             RequestDispatcher rq = request.getRequestDispatcher("/viewCreate.jsp");
             rq.forward(request, response);
         }
+
         if (action.equals("/save")){
             System.out.println("passage dans save etudiant");
             System.out.println("nom: " + request.getParameter("nom"));
@@ -40,7 +41,9 @@ public class Controleur extends HttpServlet {
 
             EtudiantDAO.create(e);
 
-            RequestDispatcher rq = request.getServletContext().getRequestDispatcher("/index.jsp");
+            List<Etudiant> etudiants = EtudiantDAO.getAll();
+            request.setAttribute("etudiants", etudiants);
+            RequestDispatcher rq = request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp");
             rq.forward(request, response);
 
         }
@@ -61,6 +64,33 @@ public class Controleur extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             System.out.println("passage dans destroy");
             EtudiantDAO.destroy(id);
+            List<Etudiant> etudiants = EtudiantDAO.getAll();
+            request.setAttribute("etudiants", etudiants);
+            request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
+        }
+
+        if (action.equals("/edit")){
+            long id = Long.parseLong(request.getParameter("id"));
+            Etudiant etudiant = EtudiantDAO.findById(id);
+            request.setAttribute("etudiant", etudiant);
+            request.getServletContext().getRequestDispatcher("/viewUpdateEtudiant.jsp").forward(request, response);
+        }
+
+        if(action.equals("/update")){
+
+            long id = Long.parseLong(request.getParameter("id"));
+            System.out.println("passage dans update avec id = " + id);
+
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+
+            int moyenne = Integer.parseInt(request.getParameter("moyenne"));
+            int nbAbsences = Integer.parseInt(request.getParameter("nbAbsences"));
+
+            EtudiantDAO.update(id, nom, prenom, moyenne,nbAbsences);
+            List<Etudiant> etudiants = EtudiantDAO.getAll();
+            request.setAttribute("etudiants", etudiants);
+            request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
 
         }
 

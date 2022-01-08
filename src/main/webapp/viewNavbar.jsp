@@ -11,7 +11,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Consulter les notes</a>
+                <a class="nav-link" href="<%= application.getContextPath()%>/do/show" class="btn btn-primary">Etudiants</a>
             </li>
 
             <li class="nav-item">

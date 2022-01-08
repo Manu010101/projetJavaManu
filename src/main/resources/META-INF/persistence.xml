@@ -8,6 +8,7 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>com.example.projetjavamanu.Etudiant</class>
         <class>com.example.projetjavamanu.Groupe</class>
+        <class>com.example.projetjavamanu.test</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
@@ -16,12 +17,8 @@
                       value="jdbc:sqlite:C:\Users\manuel\Documents\codes\IdeaProjects\bdManu.db"/>
             <property name="javax.persistence.jdbc.user" value=""/>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
-
-
         </properties>
 
-
-
-
     </persistence-unit>
+
 </persistence>

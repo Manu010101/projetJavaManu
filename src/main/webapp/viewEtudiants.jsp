@@ -19,6 +19,9 @@
     <jsp:useBean id="etudiants" type="java.util.List<com.example.projetjavamanu.Etudiant>" scope="request"/>
 
     <div class="container">
+
+        <a href="<%= application.getContextPath()%>/do/create">Créer étudiant</a>
+
         <table class="table">
             <thead>
                 <tr>
@@ -39,7 +42,7 @@
                         <td><%=etudiant.getPrenom()%></td>
                         <td><%=etudiant.getMoyenne()%></td>
                         <td><%=etudiant.getNbAbsences()%></td>
-                        <td><a href="<%= application.getContextPath()%>/do/update" class="btn btn-info">maj</a></td>
+                        <td><a href="<%= application.getContextPath()%>/do/edit?id=<%= etudiant.getId() %>" class="btn btn-info">maj</a></td>
                         <td><a href="<%= application.getContextPath()%>/do/destroy?id=<%= etudiant.getId() %>" class="btn btn-danger">Supprimer</a></td>
                     </tr>
 
@@ -50,7 +53,7 @@
     </div>
 
 
-    <%@ include file="viewNavbar.html" %>
+    <%@ include file="viewNavbar.jsp" %>
     </body>
 
 </html>
