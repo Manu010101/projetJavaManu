@@ -1,4 +1,5 @@
 <%@ page import="com.example.projetjavamanu.Etudiant" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +21,10 @@
 
     <div class="container">
 
-        <a href="<%= application.getContextPath()%>/do/create">Créer étudiant</a>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Créer étudiant
+        </button>
 
         <table class="table">
             <thead>
@@ -53,7 +57,9 @@
     </div>
 
 
+    <%@ include file="viewCreate.jsp" %>
     <%@ include file="viewNavbar.jsp" %>
+
     </body>
 
 </html>
