@@ -61,6 +61,42 @@ public class EtudiantDAO {
 
     }
 
+    /**
+     * Retourne les etudiants correspondants à une page
+     * @param indexPage
+     * @return List<Etudiant>
+     */
+    public static List<Etudiant> getPage(int indexPage){
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = emf.createEntityManager();
+
+        int nbEltParPage = 2;
+        int firstElt = indexPage * nbEltParPage;
+//        TODO: pb = SQLite only supports TYPE_FORWARD_ONLY cursors solu = changer de bd, mysql?
+        Query q = em.createNativeQuery("SELECT * FROM Etudiant")
+                .setMaxResults(nbEltParPage)
+                .setFirstResult(firstElt);
+        System.out.println("query page: " + q);
+
+        List<Etudiant> etudiants = q.getResultList();
+        System.out.println("etudiants paginés " + etudiants);
+        return etudiants;
+    }
+
+    /**
+     * Retourne le nb d'Etudiants en bd
+     * @return
+     */
+    public static int count(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = emf.createEntityManager();
+
+        Query q = em.createNativeQuery("COUNT * FROM Etudiant");
+        System.out.println("nb d elts dans bd:" + q.getFirstResult());
+        return q.getFirstResult();
+
+    }
 
     public static List<Etudiant> getAll() {
 
