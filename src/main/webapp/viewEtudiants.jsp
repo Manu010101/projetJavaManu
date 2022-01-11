@@ -1,6 +1,6 @@
 <%@ page import="com.example.projetjavamanu.Etudiant" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -52,7 +52,7 @@
         </table>
     </div>
 
-
+    <%@include file="viewBarrePagination.jsp"%>
     <%@ include file="viewNavbar.jsp" %>
     </body>
 

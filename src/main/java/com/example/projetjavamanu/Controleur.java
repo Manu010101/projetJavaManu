@@ -94,6 +94,21 @@ public class Controleur extends HttpServlet {
 
         }
 
+        if (action.equals("/count")){
+            System.out.println("Entrée dans ctrlr count");
+            EtudiantDAO.count();
+        }
+
+        if (action.equals("/page")){
+
+            int index = Integer.parseInt(request.getParameter("index"));
+            System.out.println("passage dans ctrlr page avec index = " + index);
+
+            List<Etudiant> etudiants = EtudiantDAO.getPage(index);
+
+            request.setAttribute("etudiants", etudiants);
+            request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
+        }
 
         else{
             System.out.println("die");
