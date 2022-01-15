@@ -42,6 +42,9 @@ public class Controleur extends HttpServlet {
             EtudiantDAO.create(e);
 
             List<Etudiant> etudiants = EtudiantDAO.getAll();
+
+            int nbPages = this.calculerNbPages();
+            request.setAttribute("nbPages", nbPages);
             request.setAttribute("etudiants", etudiants);
             RequestDispatcher rq = request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp");
             rq.forward(request, response);
@@ -50,10 +53,12 @@ public class Controleur extends HttpServlet {
 
         if (action.equals("/show")){
             System.out.println("passage dans show");
+            int nbPages = this.calculerNbPages();
             List<Etudiant> etudiants = EtudiantDAO.getAll();
 
             // Ajouter les étudiants à la requête pour affichage
             request.setAttribute("etudiants", etudiants);
+            request.setAttribute("nbPages", nbPages);
             System.out.println("requete: bean" + request);
             System.out.println("/show etudiants:" + etudiants.toString());
             request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
@@ -65,6 +70,9 @@ public class Controleur extends HttpServlet {
             System.out.println("passage dans destroy");
             EtudiantDAO.destroy(id);
             List<Etudiant> etudiants = EtudiantDAO.getAll();
+
+            int nbPages = this.calculerNbPages();
+            request.setAttribute("nbPages", nbPages);
             request.setAttribute("etudiants", etudiants);
             request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
         }
@@ -89,14 +97,11 @@ public class Controleur extends HttpServlet {
 
             EtudiantDAO.update(id, nom, prenom, moyenne,nbAbsences);
             List<Etudiant> etudiants = EtudiantDAO.getAll();
+            int nbPages = this.calculerNbPages();
+            request.setAttribute("nbPages", nbPages);
             request.setAttribute("etudiants", etudiants);
             request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
 
-        }
-
-        if (action.equals("/count")){
-            System.out.println("Entrée dans ctrlr count");
-            EtudiantDAO.count();
         }
 
         if (action.equals("/page")){
@@ -105,6 +110,8 @@ public class Controleur extends HttpServlet {
             System.out.println("passage dans ctrlr page avec index = " + index);
 
             List<Etudiant> etudiants = EtudiantDAO.getPage(index);
+            int nbPages = this.calculerNbPages();
+            request.setAttribute("nbPages", nbPages);
 
             request.setAttribute("etudiants", etudiants);
             request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
@@ -123,5 +130,13 @@ public class Controleur extends HttpServlet {
     }
 
     public void destroy() {
+    }
+
+    public int calculerNbPages(){
+
+        int nbEtudiants = EtudiantDAO.count();
+        int nbEtudiantsPage = 2;
+        int nbPages =  nbEtudiants / nbEtudiantsPage;
+        return nbPages;
     }
 }

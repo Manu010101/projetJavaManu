@@ -9,7 +9,7 @@ import java.util.List;
 
 public class EtudiantDAO {
 
-    private static final  String PERSISTENCE_UNIT_NAME = "PU_SQLITE";
+    private static final  String PERSISTENCE_UNIT_NAME = "PU_MYSQL";
 
     public static Etudiant findById(long id){
 
@@ -72,9 +72,10 @@ public class EtudiantDAO {
         EntityManager em = emf.createEntityManager();
 
         int nbEltParPage = 2;
-        int firstElt = indexPage * nbEltParPage;
+        int firstElt = (indexPage >  0) ?  (indexPage - 1) * nbEltParPage :  0
+        ;
 //        TODO: pb = SQLite only supports TYPE_FORWARD_ONLY cursors solu = changer de bd, mysql?
-        Query q = em.createNativeQuery("SELECT * FROM Etudiant")
+        Query q = em.createQuery("SELECT e FROM Etudiant e")
                 .setMaxResults(nbEltParPage)
                 .setFirstResult(firstElt);
         System.out.println("query page: " + q);
@@ -92,9 +93,12 @@ public class EtudiantDAO {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         EntityManager em = emf.createEntityManager();
 
-        Query q = em.createNativeQuery("COUNT * FROM Etudiant");
-        System.out.println("nb d elts dans bd:" + q.getFirstResult());
-        return q.getFirstResult();
+        Query q = em.createNativeQuery("SELECT COUNT(*) FROM ETUDIANT;");
+        Long nbEltsLong = (Long) q.getResultList().get(0);
+        int nbElts = nbEltsLong.intValue();
+        System.out.println("nb d elts dans bd:" + q.getResultList().get(0));
+
+        return nbElts;
 
     }
 
