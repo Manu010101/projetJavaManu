@@ -7,6 +7,13 @@ import java.util.ArrayList;
 @Entity
 public class Groupe {
 
+    public Groupe() {
+    }
+
+    public Groupe(String nom) {
+        this.nom = nom;
+    }
+
     @Id
     @GeneratedValue
     private Long id;

@@ -15,7 +15,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Editer les notes</a>
+                <a class="nav-link" href="<%= application.getContextPath()%>/groupe/?action=show">Groupes</a>
             </li>
 
             <li class="nav-item">

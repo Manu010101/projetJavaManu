@@ -28,6 +28,7 @@
 
         <!-- Classes persistées - liées à tes tables de la base de données -->
         <class>com.example.projetjavamanu.Etudiant</class>
+        <class>com.example.projetjavamanu.Groupe</class>
 
         <!-- Propriétés de l'unité de persistence -->
         <properties>

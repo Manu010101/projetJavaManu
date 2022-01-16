@@ -14,6 +14,14 @@
         <url-pattern>/do/*</url-pattern>
     </servlet-mapping>
     
+    <servlet-mapping>
+        <servlet-name>Controleur</servlet-name>
+        <url-pattern>/groupe/*</url-pattern>
+    </servlet-mapping>
+    
+
+
+    
     
 
 
