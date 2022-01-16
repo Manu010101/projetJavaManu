@@ -1,6 +1,7 @@
+<%@ page import="com.example.projetjavamanu.Groupe" %>
 <%@ page contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-
+<jsp:useBean id="groupes" type="java.util.List<com.example.projetjavamanu.Groupe>" scope="request"/>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -39,6 +40,17 @@
                     <div class="form-group">
                         <label>Absences
                             <input type="number" class="form-control" id="nbAbsences" name="nbAbsences"  placeholder="Enter nb absences">
+                        </label>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Groupe
+                            <select class="form-control" id="exampleFormControlSelect1" name="nomGroupe">
+                                <% for (Groupe groupe: groupes) { %>
+                                    <option><%=groupe.getNom()%></option>
+                                <% }%>
+                            </select>
                         </label>
 
                     </div>

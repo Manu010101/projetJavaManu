@@ -21,7 +21,7 @@ public class Groupe {
     @Column(unique = true, nullable = false)
     private String nom;
 
-    @OneToMany
+    @OneToMany(mappedBy = "groupe", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private ArrayList<Etudiant> liste;
 
     public Long getId() {

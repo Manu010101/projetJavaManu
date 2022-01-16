@@ -11,11 +11,12 @@ public class Etudiant implements Serializable {
 
     public Etudiant(){}
 
-    public Etudiant(String nom, String prenom, int nbAbsences, int moyenne) {
+    public Etudiant(String nom, String prenom, int nbAbsences, int moyenne, Groupe groupe) {
         this.nom = nom;
         this.prenom = prenom;
         this.nbAbsences = nbAbsences;
         this.moyenne = moyenne;
+        this.groupe = groupe;
     }
 
     @Id
@@ -26,6 +27,11 @@ public class Etudiant implements Serializable {
     private String prenom;
     private int nbAbsences;
     private int moyenne;
+
+    @ManyToOne
+    private Groupe groupe;
+
+
 
     public Long getId() {
         return id;
@@ -72,6 +78,14 @@ public class Etudiant implements Serializable {
     public Etudiant setMoyenne(int moyenne) {
         this.moyenne = moyenne;
         return this;
+    }
+
+    public Groupe getGroupe() {
+        return groupe;
+    }
+
+    public void setGroupe(Groupe groupe) {
+        this.groupe = groupe;
     }
 
     @Override

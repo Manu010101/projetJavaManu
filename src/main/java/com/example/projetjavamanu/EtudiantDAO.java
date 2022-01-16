@@ -74,7 +74,6 @@ public class EtudiantDAO {
         int nbEltParPage = 2;
         int firstElt = (indexPage >  0) ?  (indexPage - 1) * nbEltParPage :  0
         ;
-//        TODO: pb = SQLite only supports TYPE_FORWARD_ONLY cursors solu = changer de bd, mysql?
         Query q = em.createQuery("SELECT e FROM Etudiant e")
                 .setMaxResults(nbEltParPage)
                 .setFirstResult(firstElt);

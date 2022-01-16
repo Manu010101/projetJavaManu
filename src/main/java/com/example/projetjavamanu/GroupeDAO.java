@@ -19,6 +19,17 @@ public class GroupeDAO {
         return g;
     }
 
+    public static Groupe findByNom(String nom){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = emf.createEntityManager();
+        final String QUERY = "SELECT g FROM Groupe g WHERE g.nom = :nom";
+        Query query = em.createQuery(QUERY);
+        query.setParameter("nom", nom);
+        Groupe g = (Groupe) query.getSingleResult();
+        em.close();
+        return g;
+    }
+
     public static void create(Groupe g){
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);

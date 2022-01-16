@@ -30,7 +30,8 @@ public class Controleur extends HttpServlet {
 
         if (action.equals("/create")){
             System.out.println("passage dans create");
-
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
             RequestDispatcher rq = request.getRequestDispatcher("/viewCreate.jsp");
             rq.forward(request, response);
         }
@@ -45,7 +46,15 @@ public class Controleur extends HttpServlet {
             int moyenne = Integer.parseInt(request.getParameter("moyenne"));
             int nbAbsences = Integer.parseInt(request.getParameter("nbAbsences"));
 
-            Etudiant e = new Etudiant(nom, prenom, nbAbsences, moyenne);
+//          récupération du nom du groupe
+
+            String nomGroupe = request.getParameter("nomGroupe");
+
+//         Trouver l'entité groupe correspondante au nom
+            Groupe g = GroupeDAO.findByNom(nomGroupe);
+
+
+            Etudiant e = new Etudiant(nom, prenom, nbAbsences, moyenne,  g);
 
             EtudiantDAO.create(e);
 
@@ -54,6 +63,8 @@ public class Controleur extends HttpServlet {
             int nbPages = this.calculerNbPages();
             request.setAttribute("nbPages", nbPages);
             request.setAttribute("etudiants", etudiants);
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
             RequestDispatcher rq = request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp");
             rq.forward(request, response);
 
@@ -63,6 +74,8 @@ public class Controleur extends HttpServlet {
             System.out.println("passage dans show");
             int nbPages = this.calculerNbPages();
             List<Etudiant> etudiants = EtudiantDAO.getAll();
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
 
             // Ajouter les étudiants à la requête pour affichage
             request.setAttribute("etudiants", etudiants);
@@ -182,8 +195,6 @@ public class Controleur extends HttpServlet {
             request.getServletContext().getRequestDispatcher("/index.jsp");
         }
 
-
-
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
@@ -203,3 +214,9 @@ public class Controleur extends HttpServlet {
         return nbPages;
     }
 }
+//--
+//TODO: Nettoyer le controleur:
+// - passage à redirect
+// - utilisation de switch pour Etudiant
+// - inclure les beans groupes pour pagination (sinon crash)
+//--
