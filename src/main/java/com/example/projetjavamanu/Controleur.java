@@ -69,7 +69,7 @@ public class Controleur extends HttpServlet {
             rq.forward(request, response);
 
         }
-
+        //old
         if (action.equals("/show")){
             System.out.println("passage dans show");
             int nbPages = this.calculerNbPages();
@@ -119,6 +119,8 @@ public class Controleur extends HttpServlet {
             EtudiantDAO.update(id, nom, prenom, moyenne,nbAbsences);
             List<Etudiant> etudiants = EtudiantDAO.getAll();
             int nbPages = this.calculerNbPages();
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
             request.setAttribute("nbPages", nbPages);
             request.setAttribute("etudiants", etudiants);
             request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
@@ -133,6 +135,9 @@ public class Controleur extends HttpServlet {
             List<Etudiant> etudiants = EtudiantDAO.getPage(index);
             int nbPages = this.calculerNbPages();
             request.setAttribute("nbPages", nbPages);
+
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
 
             request.setAttribute("etudiants", etudiants);
             request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);

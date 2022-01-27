@@ -61,10 +61,21 @@
         <%@include file="viewBarrePagination.jsp"%>
         <%@ include file="viewNavbar.jsp" %>
 
+
+        <button id="btn_ajax" class="btn-primary">Ajax</button>
+
+        <div class="app">
+
+        </div>
     </div>
+
+
+
+
 
 
 
     </body>
 
+    <script src="ressources/index.js"></script>
 </html>
