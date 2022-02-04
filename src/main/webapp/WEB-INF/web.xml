@@ -4,6 +4,17 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
+
+    <filter>
+        <filter-name>FilterForm</filter-name>
+        <filter-class>com.example.projetjavamanu.FilterForm</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>FilterForm</filter-name>
+        <url-pattern>/create</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>Controleur</servlet-name>
         <servlet-class>com.example.projetjavamanu.Controleur</servlet-class>
@@ -18,7 +29,9 @@
         <servlet-name>Controleur</servlet-name>
         <url-pattern>/groupe/*</url-pattern>
     </servlet-mapping>
-    
+
+
+
 
 
     
