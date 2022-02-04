@@ -19,16 +19,43 @@
 <body>
 
     <jsp:useBean id="etudiants" type="java.util.List<com.example.projetjavamanu.Etudiant>" scope="request"/>
+    <jsp:useBean id="groupes" type="java.util.List<com.example.projetjavamanu.Groupe>" scope="request"/>
 
     <div class="container">
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            Créer étudiant
-        </button>
+        <div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Créer étudiant
+            </button>
 
-        <table class="table">
-            <thead>
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Choix du groupe</option>
+                <% for (Groupe groupe: groupes) { %>
+                    <option><%= groupe.getNom() %></option>
+                <% } %>
+            </select>
+
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Noms</option>
+                <% for (Groupe groupe: groupes) { %>
+                <option><%= groupe.getNom() %></option>
+                <% } %>
+            </select>
+
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Notes</option>
+                <% for (Groupe groupe: groupes) { %>
+                <option><%= groupe.getNom() %></option>
+                <% } %>
+            </select>
+
+        </div>
+
+
+        <div class="principale">
+            <table class="table">
+                <thead>
                 <tr>
                     <td>Nom</td>
                     <td>Prénom</td>
@@ -38,25 +65,28 @@
                     <td>Modifier</td>
                     <td>Supprimer</td>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
+                <tbody>
                 <% for (Etudiant etudiant: etudiants) { %>
 
-                    <tr>
-                        <td><%=etudiant.getNom()%></td>
-                        <td><%=etudiant.getPrenom()%></td>
-                        <td><%=etudiant.getMoyenne()%></td>
-                        <td><%=etudiant.getNbAbsences()%></td>
-                        <td><%=etudiant.getGroupe().getNom()%></td>
-                        <td><a href="<%= application.getContextPath()%>/do/edit?id=<%= etudiant.getId() %>" class="btn btn-info">maj</a></td>
-                        <td><a href="<%= application.getContextPath()%>/do/destroy?id=<%= etudiant.getId() %>" class="btn btn-danger">Supprimer</a></td>
-                    </tr>
+                <tr>
+                    <td><%=etudiant.getNom()%></td>
+                    <td><%=etudiant.getPrenom()%></td>
+                    <td><%=etudiant.getMoyenne()%></td>
+                    <td><%=etudiant.getNbAbsences()%></td>
+                    <td><%=etudiant.getGroupe().getNom()%></td>
+                    <td><a href="<%= application.getContextPath()%>/do/edit?id=<%= etudiant.getId() %>" class="btn btn-info">maj</a></td>
+                    <td><a href="<%= application.getContextPath()%>/do/destroy?id=<%= etudiant.getId() %>" class="btn btn-danger">Supprimer</a></td>
+                </tr>
 
-            <% } %>
+                <% } %>
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
+
         <%@ include file="viewCreate.jsp" %>
         <%@include file="viewBarrePagination.jsp"%>
         <%@ include file="viewNavbar.jsp" %>
@@ -69,13 +99,7 @@
         </div>
     </div>
 
-
-
-
-
-
-
-    </body>
+</body>
 
     <script src="ressources/index.js"></script>
 </html>
