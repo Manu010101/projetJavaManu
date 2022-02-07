@@ -12,7 +12,7 @@
 
     <filter-mapping>
         <filter-name>FilterForm</filter-name>
-        <url-pattern>/create</url-pattern>
+        <url-pattern>/do/save</url-pattern>
     </filter-mapping>
 
     <servlet>

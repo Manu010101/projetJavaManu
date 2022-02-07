@@ -1,19 +1,10 @@
-<%@ page import="com.example.projetjavamanu.Groupe" %>
 <%@ page contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%--<jsp:useBean id="groupes" type="java.util.List<com.example.projetjavamanu.Groupe>" scope="request"/>--%>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Création d'un étudiant</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+<%@ page import="com.example.projetjavamanu.Groupe" %>
+<jsp:useBean id="groupes" type="java.util.List<com.example.projetjavamanu.Groupe>" scope="request"/>
+
+            <div >
 
                 <form method="post" action="<%= application.getContextPath()%>/do/save">
                     <div class="form-group">
@@ -60,12 +51,6 @@
 
                 </form>
 
-
             </div>
-
-        </div>
-    </div>
-</div>
-
 
 

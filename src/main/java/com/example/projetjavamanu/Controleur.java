@@ -28,12 +28,17 @@ public class Controleur extends HttpServlet {
         System.out.println("uri: " + uri);
         System.out.println("url: " + uri);
 
+        if (action.equals("/acceuil")){
+            RequestDispatcher rq = request.getRequestDispatcher("/viewLayout.jsp");
+            rq.forward(request, response);
+        }
+
         if (action.equals("/create")){
             System.out.println("passage dans create");
             List<Groupe> groupes = GroupeDAO.getAll();
             request.setAttribute("groupes", groupes);
-            RequestDispatcher rq = request.getRequestDispatcher("/viewCreate.jsp");
-            rq.forward(request, response);
+            request.setAttribute("content", "/viewCreate.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
         }
 
         if (action.equals("/save")){
@@ -65,8 +70,8 @@ public class Controleur extends HttpServlet {
             request.setAttribute("etudiants", etudiants);
             List<Groupe> groupes = GroupeDAO.getAll();
             request.setAttribute("groupes", groupes);
-            RequestDispatcher rq = request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp");
-            rq.forward(request, response);
+            request.setAttribute("content", "/viewEtudiants.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
 
         }
         //old
@@ -80,9 +85,10 @@ public class Controleur extends HttpServlet {
             // Ajouter les étudiants à la requête pour affichage
             request.setAttribute("etudiants", etudiants);
             request.setAttribute("nbPages", nbPages);
+            request.setAttribute("content", "/viewEtudiants.jsp");
             System.out.println("requete: bean" + request);
             System.out.println("/show etudiants:" + etudiants.toString());
-            request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
         }
 
         if(action.equals("/destroy")){

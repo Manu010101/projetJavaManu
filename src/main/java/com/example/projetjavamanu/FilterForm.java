@@ -1,11 +1,10 @@
 package com.example.projetjavamanu;
 
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
-@WebFilter(filterName = "FilterForm")
 public class FilterForm implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
@@ -26,26 +25,29 @@ public class FilterForm implements Filter {
             }
         }
 
-        private boolean isEmpty(String param){
-            if(param == null){
-                return true;
-            }
-            return false;
+        if (!erreur) {
+            chain.doFilter(request, response);
         }
+    }
 
-        private void reject(ServletRequest request, ServletResponse response) throws ServletException, IOException{
-            request.setAttribute("messageErreur", "Veuillez remplir correctement le formulaire");
+    public boolean isEmpty(String param){
+        return param.length() < 1;
+    }
 
-            Enumeration params = request.getParameterNames();
-            String paramN = null;
+    private void reject(ServletRequest request, ServletResponse response) throws ServletException, IOException{
+        request.setAttribute("messageErreur", "Veuillez remplir correctement le formulaire");
 
+        Enumeration params = request.getParameterNames();
+        String paramN = null;
+
+        while (params.hasMoreElements()){
+            paramN = (String) params.nextElement();
             request.setAttribute(paramN, request.getParameter(paramN));
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("laoutuviens").forward(request, response);
-
-
+            System.out.println("pb");
         }
 
-        chain.doFilter(request, response);
+        request.getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+
+
     }
 }
