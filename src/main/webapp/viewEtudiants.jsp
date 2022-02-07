@@ -12,8 +12,6 @@
 
             <a href="<%= application.getContextPath()%>/do/create" class="btn-primary">Créer étudiant</a>
 
-
-
             <select class="form-select" aria-label="Default select example">
                 <option selected>Choix du groupe</option>
                 <% for (Groupe groupe: groupes) { %>

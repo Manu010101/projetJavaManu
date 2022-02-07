@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 public class EtudiantDAO {
@@ -109,5 +110,14 @@ public class EtudiantDAO {
         Query q = em.createQuery("SELECT e FROM Etudiant e");
 
         return q.getResultList();
+    }
+
+    public static Query queryFiltree(Array params){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = emf.createEntityManager();
+        String raw = "SELECT e FROM Etudiant e";
+
+
+        Query q = em.createQuery(raw);
     }
 }

@@ -97,18 +97,22 @@ public class Controleur extends HttpServlet {
             System.out.println("passage dans destroy");
             EtudiantDAO.destroy(id);
             List<Etudiant> etudiants = EtudiantDAO.getAll();
-
+            List<Groupe> groupes = GroupeDAO.getAll();
             int nbPages = this.calculerNbPages();
             request.setAttribute("nbPages", nbPages);
             request.setAttribute("etudiants", etudiants);
-            request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("content", "/viewEtudiants.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+
         }
 
         if (action.equals("/edit")){
             long id = Long.parseLong(request.getParameter("id"));
             Etudiant etudiant = EtudiantDAO.findById(id);
             request.setAttribute("etudiant", etudiant);
-            request.getServletContext().getRequestDispatcher("/viewUpdateEtudiant.jsp").forward(request, response);
+            request.setAttribute("content", "/viewUpdateEtudiant.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
         }
 
         if(action.equals("/update")){
@@ -129,7 +133,9 @@ public class Controleur extends HttpServlet {
             request.setAttribute("groupes", groupes);
             request.setAttribute("nbPages", nbPages);
             request.setAttribute("etudiants", etudiants);
-            request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
+            request.setAttribute("content", "/viewEtudiants.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+
 
         }
 
@@ -147,6 +153,10 @@ public class Controleur extends HttpServlet {
 
             request.setAttribute("etudiants", etudiants);
             request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
+        }
+
+        if (action.equals("ajax")){
+
         }
 
         if (uri.contains("groupe")){
