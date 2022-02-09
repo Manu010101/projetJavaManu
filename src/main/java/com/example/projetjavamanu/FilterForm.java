@@ -1,6 +1,8 @@
 package com.example.projetjavamanu;
 
 import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -21,11 +23,12 @@ public class FilterForm implements Filter {
         while (params.hasMoreElements()){
             if (isEmpty(request.getParameter((String) params.nextElement()))){
                 erreur = true;
-                reject(request, response);
+                reject( request,  response);
             }
         }
 
         if (!erreur) {
+            System.out.println("passage dans doFilter");
             chain.doFilter(request, response);
         }
     }
@@ -45,7 +48,7 @@ public class FilterForm implements Filter {
             request.setAttribute(paramN, request.getParameter(paramN));
             System.out.println("pb");
         }
-
+        System.out.println("entree dans reject");
         request.getRequestDispatcher("/viewLayout.jsp").forward(request, response);
 
 

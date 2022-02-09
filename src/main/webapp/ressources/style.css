@@ -6,4 +6,5 @@ div .content{
 
 div .container{
     margin: 5px;
+    border: black solid 1px;
 }

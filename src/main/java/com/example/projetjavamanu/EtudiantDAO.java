@@ -119,5 +119,7 @@ public class EtudiantDAO {
 
 
         Query q = em.createQuery(raw);
+
+        return q;
     }
 }

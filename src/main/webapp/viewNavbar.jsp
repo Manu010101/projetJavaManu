@@ -16,12 +16,15 @@
                 <a class="nav-link" href="<%= application.getContextPath()%>/groupe/?action=show">Groupes</a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">Consulter les absences</a>
-            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAbsences" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Absences
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Consulter les Absences</a>
+                    <a class="dropdown-item" href="#">Editer les Absences</a>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">Editer les absences</a>
+                </div>
             </li>
 
             <li class="nav-item dropdown">
@@ -37,10 +40,7 @@
 
 
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+
     </div>
 </nav>
 

@@ -12,30 +12,28 @@
 
             <a href="<%= application.getContextPath()%>/do/create" class="btn-primary">Créer étudiant</a>
 
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Choix du groupe</option>
-                <% for (Groupe groupe: groupes) { %>
-                    <option><%= groupe.getNom() %></option>
-                <% } %>
-            </select>
-
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Noms</option>
+            <select class="filtre" aria-label="Default select example">
+                <option selected>groupe</option>
                 <% for (Groupe groupe: groupes) { %>
                 <option><%= groupe.getNom() %></option>
                 <% } %>
             </select>
 
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Notes</option>
+            <select class="filtre" aria-label="Default select example">
+                <option selected>nom</option>
                 <% for (Groupe groupe: groupes) { %>
                 <option><%= groupe.getNom() %></option>
+                <% } %>
+            </select>
+
+            <select class="filtre" aria-label="Default select example">
+                <option selected>moyenne</option>
+                <% for (Etudiant etudiant: etudiants) { %>
+                <option><%= etudiant.getMoyenne() %></option>
                 <% } %>
             </select>
 
         </div>
-
-
         <div class="principale">
             <table class="table">
                 <thead>
@@ -72,3 +70,8 @@
         <%@ include file="viewBarrePagination.jsp"%>
 
     </div>
+    <script type='text/javascript'>
+        // Description des urls de demande ajax
+        var urlgetetudiants = "<%=application.getContextPath()%>/do/ajax";
+    </script>
+    <script src="<%=application.getContextPath()%>/ressources/js/app.js"></script>

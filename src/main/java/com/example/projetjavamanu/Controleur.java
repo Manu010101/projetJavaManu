@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -64,11 +65,12 @@ public class Controleur extends HttpServlet {
             EtudiantDAO.create(e);
 
             List<Etudiant> etudiants = EtudiantDAO.getAll();
+            List<Groupe> groupes = GroupeDAO.getAll();
 
             int nbPages = this.calculerNbPages();
             request.setAttribute("nbPages", nbPages);
             request.setAttribute("etudiants", etudiants);
-            List<Groupe> groupes = GroupeDAO.getAll();
+
             request.setAttribute("groupes", groupes);
             request.setAttribute("content", "/viewEtudiants.jsp");
             request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
@@ -155,8 +157,17 @@ public class Controleur extends HttpServlet {
             request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
         }
 
-        if (action.equals("ajax")){
-
+        if (action.equals("/ajax")){
+            System.out.println("entree dans async controleur");
+            List<Etudiant> etudiants = EtudiantDAO.getAll();
+            Etudiant etu = etudiants.get(0);
+            System.out.println(etu);
+            String json = new Gson().toJson(etu);
+            System.out.println(json);
+            // Retourne le résultat sous forme JSON
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
         }
 
         if (uri.contains("groupe")){
