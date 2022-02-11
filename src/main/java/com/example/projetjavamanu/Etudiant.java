@@ -1,6 +1,7 @@
 package com.example.projetjavamanu;
 
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import org.eclipse.persistence.annotations.PrimaryKey;
 
@@ -21,15 +22,20 @@ public class Etudiant implements Serializable {
 
     @Id
     @GeneratedValue
+    @Expose
     private Long id;
 
+    @Expose
     private String nom;
+    @Expose
     private String prenom;
+    @Expose
     private int nbAbsences;
+    @Expose
     private int moyenne;
 
     @ManyToOne
-    private Groupe groupe;
+    private  Groupe groupe;
 
 
 

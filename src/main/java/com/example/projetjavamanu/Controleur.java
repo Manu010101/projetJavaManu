@@ -1,10 +1,13 @@
 package com.example.projetjavamanu;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -154,16 +157,36 @@ public class Controleur extends HttpServlet {
             request.setAttribute("groupes", groupes);
 
             request.setAttribute("etudiants", etudiants);
-            request.getServletContext().getRequestDispatcher("/viewEtudiants.jsp").forward(request, response);
+            request.setAttribute("content", "/viewEtudiants.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
         }
 
         if (action.equals("/ajax")){
             System.out.println("entree dans async controleur");
-            List<Etudiant> etudiants = EtudiantDAO.getAll();
-            Etudiant etu = etudiants.get(0);
-            System.out.println(etu);
-            String json = new Gson().toJson(etu);
-            System.out.println(json);
+
+            //Récupération des paramètres pour filtrer en async
+            String nom = request.getParameter("nom");
+            String moyenne = request.getParameter("moyenne");
+            String groupe = request.getParameter("groupe");
+
+            //dictionnaire de paramètres, contenant les attributs sur lesquels filtrer la requête
+            //il est rempli par les paramètres non vides
+            Map<String, String> parametres = new HashMap<>();
+            if (!Objects.equals(nom, "nom")){
+                parametres.put("nom", nom);
+            }
+            if (!Objects.equals(moyenne, "moyenne")){
+                parametres.put("moyenne", moyenne);
+            }
+            if (!Objects.equals(groupe, "groupe")){
+                parametres.put("groupe", groupe);
+            }
+
+            List<Etudiant> etudiants = EtudiantDAO.queryFiltree(parametres);
+
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            String json = gson.toJson(etudiants);
+            System.out.println("json=" + json);
             // Retourne le résultat sous forme JSON
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

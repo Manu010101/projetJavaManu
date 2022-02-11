@@ -1,9 +1,12 @@
 
-<jsp:useBean id="messageErreur" type="java.lang.String" scope="request"></jsp:useBean>
+<jsp:useBean id="messageErreur" type="java.util.ArrayList" scope="request"></jsp:useBean>
 
 
 <div class="alert alert-danger" role="alert">
-    <%=messageErreur%>
+    <% for (Object message: messageErreur) { %>
+        <p><%= message %></p>
+    <% } %>
+
 </div>
 
 

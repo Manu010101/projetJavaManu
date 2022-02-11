@@ -9,28 +9,44 @@
                 <form method="post" action="<%= application.getContextPath()%>/do/save">
                     <div class="form-group">
                         <label>Nom
-                            <input type="text" class="form-control" id="nom"  name="nom" placeholder="Enter nom">
+                            <input type="text" class="form-control" id="nom"  name="nom" placeholder="Enter nom"
+                            <% if (request.getAttribute("nom") != null) {%>
+                                value="<%= request.getAttribute("nom")%>"
+                            <% }%>
+                            >
                         </label>
 
                     </div>
 
                     <div class="form-group">
                         <label>Prénom
-                            <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Enter prenom">
+                            <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Enter prenom"
+                                <% if (request.getAttribute("prenom") != null) {%>
+                                   value="<%= request.getAttribute("prenom")%>"
+                                <% }%>
+                            >
                         </label>
 
                     </div>
 
                     <div class="form-group">
                         <label>Moyenne
-                            <input type="number" class="form-control" id="moyenne" name="moyenne" placeholder="Enter moyenne">
+                            <input type="number" class="form-control" id="moyenne" name="moyenne" placeholder="Enter moyenne"
+                                <% if (request.getAttribute("moyenne") != null) {%>
+                                   value="<%= request.getAttribute("moyenne")%>"
+                                <% }%>
+                            >
                         </label>
 
                     </div>
 
                     <div class="form-group">
                         <label>Absences
-                            <input type="number" class="form-control" id="nbAbsences" name="nbAbsences"  placeholder="Enter nb absences">
+                            <input type="number" class="form-control" id="nbAbsences" name="nbAbsences"  placeholder="Enter nb absences"
+                                <% if (request.getAttribute("nbAbsences") != null) {%>
+                                   value="<%= request.getAttribute("nbAbsences")%>"
+                                <% }%>
+                            >
                         </label>
 
                     </div>

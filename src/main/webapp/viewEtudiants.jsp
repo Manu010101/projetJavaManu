@@ -3,6 +3,7 @@
 
 <%@ page import="com.example.projetjavamanu.Etudiant" %>
 <%@ page import="com.example.projetjavamanu.Groupe" %>
+<%@ page import="java.util.ArrayList" %>
 <jsp:useBean id="etudiants" type="java.util.List<com.example.projetjavamanu.Etudiant>" scope="request"/>
 <jsp:useBean id="groupes" type="java.util.List<com.example.projetjavamanu.Groupe>" scope="request"/>
 
@@ -15,15 +16,32 @@
             <select class="filtre" aria-label="Default select example">
                 <option selected>groupe</option>
                 <% for (Groupe groupe: groupes) { %>
-                <option><%= groupe.getNom() %></option>
+                <option><%= groupe.getId()%></option>
                 <% } %>
             </select>
 
             <select class="filtre" aria-label="Default select example">
                 <option selected>nom</option>
-                <% for (Groupe groupe: groupes) { %>
-                <option><%= groupe.getNom() %></option>
-                <% } %>
+                <%
+                     ArrayList<Character> lettres = new ArrayList<>();
+                    for (Etudiant etudiant:etudiants) {
+                        String nom = etudiant.getNom();
+                        System.out.println(nom);
+                        char lettre = nom.charAt(0);
+                        if (!lettres.contains(lettre)){
+                            lettres.add(lettre);
+                        }
+                    }
+                    if (lettres.size() > 1){
+
+                        for (Character l:lettres) {
+                            System.out.println("ch" + l);
+                        }}
+
+                        for (Character l:lettres) { %>
+                            <option><%= l %></option>
+                    <%
+                    } %>
             </select>
 
             <select class="filtre" aria-label="Default select example">

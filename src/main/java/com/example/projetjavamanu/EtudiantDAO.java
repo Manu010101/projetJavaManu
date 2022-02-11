@@ -7,6 +7,7 @@ import jakarta.persistence.Query;
 
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Map;
 
 public class EtudiantDAO {
 
@@ -112,14 +113,50 @@ public class EtudiantDAO {
         return q.getResultList();
     }
 
-    public static Query queryFiltree(Array params){
+    /**
+     * Fonction qui filtre les étudiants en fonction des attributs contenus dans params
+     * @param params
+     * @return
+     */
+    public static List<Etudiant> queryFiltree(Map<String, String> params){
+//        TODO: passer la requete en SQL - voir sous quelle forme on recupere le resultat
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         EntityManager em = emf.createEntityManager();
         String raw = "SELECT e FROM Etudiant e";
+        for (String key:params.keySet()) {
+            if (key.equals("groupe")){
+                raw = "SELECT e FROM Etudiant e.groupe ";
+            }
+            else {
+            raw += " WHERE e." + key + "=" + params.get(key);
+            }
+        }
 
-
+        System.out.println("query = " + raw);
         Query q = em.createQuery(raw);
+        return q.getResultList();
 
-        return q;
+
+    }
+
+    /**
+     * Fonction vérifiant si nom et prénom sont déjà dans la BD auquel cas renvoie true
+     * @param nom
+     * @param prenom
+     * @return boolean
+     */
+    public static boolean verifieSiDejaEnregistre(String nom, String prenom){
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = emf.createEntityManager();
+
+        Query q = em.createNativeQuery("SELECT COUNT(*) FROM ETUDIANT WHERE (ETUDIANT.NOM = ? AND ETUDIANT.PRENOM = ?)")
+            .setParameter(1, nom)
+            .setParameter(2, prenom);
+
+        Long nbEltsLong = (Long) q.getResultList().get(0);
+        int nbElts = nbEltsLong.intValue();
+
+        return nbElts > 0;
     }
 }
