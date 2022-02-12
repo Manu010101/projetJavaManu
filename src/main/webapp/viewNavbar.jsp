@@ -33,7 +33,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Consulter les notes</a>
-                    <a class="dropdown-item" href="#">Editer les notes</a>
+                    <a class="dropdown-item" href="<%= application.getContextPath()%>/do/editNotes">Editer les notes</a>
 
                 </div>
             </li>

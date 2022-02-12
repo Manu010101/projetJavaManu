@@ -6,6 +6,7 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -115,25 +116,42 @@ public class EtudiantDAO {
 
     /**
      * Fonction qui filtre les étudiants en fonction des attributs contenus dans params
-     * @param params
+     * @param params : contient (dans un dico: champ + valeur) les champs selon lesquels filtrer
      * @return
      */
     public static List<Etudiant> queryFiltree(Map<String, String> params){
-//        TODO: passer la requete en SQL - voir sous quelle forme on recupere le resultat
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         EntityManager em = emf.createEntityManager();
-        String raw = "SELECT e FROM Etudiant e";
+        String raw = "SELECT * FROM Etudiant WHERE (";
+        ArrayList<String> conditions = new ArrayList<>();
+        //remplissage d'un tableau contenant les bouts de conditions
         for (String key:params.keySet()) {
-            if (key.equals("groupe")){
-                raw = "SELECT e FROM Etudiant e.groupe ";
+            if (key.equals("nom")){
+                conditions.add(" Etudiant.nom LIKE '?" + key + "%'");
             }
             else {
-            raw += " WHERE e." + key + "=" + params.get(key);
+                conditions.add(" Etudiant." + key + " = ?"+key);
             }
         }
+        if (conditions.size() > 1) {
+            for (String cdt : conditions) {
+                raw += " AND " + cdt ;
+            }
+        }
+        else raw +=  conditions.get(0);
+
+        raw += ")";
+
+        Query q = em.createNativeQuery(raw);
+
+        for (String key:params.keySet()) {
+            q.setParameter(key, params.get(key));
+        }
+
 
         System.out.println("query = " + raw);
-        Query q = em.createQuery(raw);
+
         return q.getResultList();
 
 
@@ -158,5 +176,16 @@ public class EtudiantDAO {
         int nbElts = nbEltsLong.intValue();
 
         return nbElts > 0;
+    }
+
+
+    public static List<Etudiant> getEtudiantsByGroupe(int groupe_id){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = emf.createEntityManager();
+
+        Query q = em.createNativeQuery("SELECT * FROM ETUDIANT WHERE ETUDIANT.GROUPE_ID = ?")
+                .setParameter(1, groupe_id);
+
+        return q.getResultList();
     }
 }

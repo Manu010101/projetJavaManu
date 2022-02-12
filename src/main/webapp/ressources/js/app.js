@@ -69,25 +69,5 @@ function filtrer() {
 
 }
 
-async function asyncCall() {
-    console.log("Requête async (norme ECMAScript 2017)");
-
-    // Création des settings
-    const settings = {
-        method: 'POST',
-        /*headers: {                    // Possibilité de modifier les headers de la demande
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        }*/
-        body: 'test=testasync'  // Donnée envoyée au serveur
-    };
-
-    // Attente d'une réponse de l'URL getEtudiants
-    // URL créée dans le fichier etudiants.jsp
-    const request = await fetch(urlgetetudiants);
-
-    // Retourne la réponse JSON du serveur
-    return request.json();
-}
 
 

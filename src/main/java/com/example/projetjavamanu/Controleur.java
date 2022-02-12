@@ -179,7 +179,7 @@ public class Controleur extends HttpServlet {
                 parametres.put("moyenne", moyenne);
             }
             if (!Objects.equals(groupe, "groupe")){
-                parametres.put("groupe", groupe);
+                parametres.put("GROUPE_ID", groupe);
             }
 
             List<Etudiant> etudiants = EtudiantDAO.queryFiltree(parametres);
@@ -191,6 +191,32 @@ public class Controleur extends HttpServlet {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
+        }
+
+        if (action.equals("/ajaxNotes")){
+
+            Groupe groupe = GroupeDAO.findByNom(request.getParameter("nomGroupe"));
+            int groupe_id = Math.toIntExact(groupe.getId());
+
+            List<Etudiant> etudiants = EtudiantDAO.getEtudiantsByGroupe(groupe_id);
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            String json = gson.toJson(etudiants);
+            System.out.println("json=" + json);
+            // Retourne le résultat sous forme JSON
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+
+
+        }
+
+        if (action.equals("/editNotes")){
+            System.out.println("entrer dans controleur editNotes");
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("content", "/viewEditNotes.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+
         }
 
         if (uri.contains("groupe")){
