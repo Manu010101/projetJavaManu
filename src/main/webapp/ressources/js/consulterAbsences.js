@@ -8,7 +8,7 @@ function filtrer() {
 
     let groupe_nom = elt.value
 
-    let url=urlEditNotes + "?" + "nomGroupe=" + groupe_nom // il y aura un pb ici en prod
+    let url=urlEditAbsences + "?" + "nomGroupe=" + groupe_nom
 
     function promesseEtu(url, data) {
         return new Promise(
@@ -32,16 +32,10 @@ function filtrer() {
         )
     }
 
-    function editer(results) {
+    function consulterAbsences(results){
         console.log("Nickel: " + results)
         conteneur = document.querySelector(".editNotes")
         conteneur.innerHTML = ""
-
-        //noeud form
-
-        formulaire = document.createElement("form")
-        formulaire.setAttribute("method", "post")
-        formulaire.setAttribute("action", urlSaveNotes)
 
         //noeud table
         tableau = document.createElement("table")
@@ -56,7 +50,7 @@ function filtrer() {
 
         // noeuds td de l'en tête
 
-        champs = ["Nom", "Prénom", "Moyenne"]
+        champs = ["Nom", "Prénom", "Nb absences"]
 
         for (let i = 0; i < champs.length; i++) {
             td = document.createElement("td")
@@ -64,53 +58,34 @@ function filtrer() {
             tr_thead.appendChild(td)
         }
 
-
         thead.appendChild(tr_thead)
         tableau.appendChild(thead)
-
 
         for (let i = 0; i < results.length; i++) {
 
             tr = document.createElement("tr")
-            // remplissage avec nom prénom notes
+            // remplissage avec nom prénom absences
             for (let j = 3; j < 5; j++) {
                 td = document.createElement("td")
                 td.innerHTML = results[i][j]
                 tr.appendChild(td)
             }
-            //création de l'elt input puis rattacher à tr
+            //partie absences
             td = document.createElement("td")
-            elt_input = document.createElement("input")
-            elt_input.setAttribute("type", "number")
-            let etu_id = results[i][0]
-            let etu_note = results[i][1]
-            console.log("note" + etu_note)
-            elt_input.setAttribute("name", etu_id)
-            elt_input.setAttribute("value", etu_note)
-            td.appendChild(elt_input)
+            td.innerHTML = results[i][2]
             tr.appendChild(td)
+
             tableau.appendChild(tr)
         }
 
-
-
-        elt_submit = document.createElement("input")
-        elt_submit.setAttribute("type", "submit")
-        elt_submit.setAttribute("className", "btn btn-primary")
-        elt_submit.setAttribute("value", "Valider")
-
-        elt_submit.setAttribute("style", "margin: 5px")
-
-        formulaire.appendChild(tableau)
-        formulaire.appendChild(elt_submit)
-        conteneur.appendChild(formulaire)
+        conteneur.appendChild(tableau)
 
     }
 
     //requete Ajax
 
     promesseEtu(url)
-        .then(data => editer(data))
-        .catch(e => console.log("erreur catch by manu" + e))
+        .then(data => consulterAbsences(data))
+        .catch(e => console.log("erreur catch:" + e))
 
 }

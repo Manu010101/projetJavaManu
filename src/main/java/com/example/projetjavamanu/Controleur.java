@@ -1,10 +1,7 @@
 package com.example.projetjavamanu;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -193,7 +190,7 @@ public class Controleur extends HttpServlet {
             response.getWriter().write(json);
         }
 
-        if (action.equals("/ajaxNotes")){
+        if (action.equals("/ajaxEtudiantsParGroupe")){
 
             Groupe groupe = GroupeDAO.findByNom(request.getParameter("nomGroupe"));
             int groupe_id = Math.toIntExact(groupe.getId());
@@ -210,6 +207,14 @@ public class Controleur extends HttpServlet {
 
         }
 
+        if (action.equals("/consulterNotes")){
+            System.out.println("entrer dans controleur consulter notes");
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("content", "/viewConsulteNotes.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+        }
+
         if (action.equals("/editNotes")){
             System.out.println("entrer dans controleur editNotes");
             List<Groupe> groupes = GroupeDAO.getAll();
@@ -217,6 +222,48 @@ public class Controleur extends HttpServlet {
             request.setAttribute("content", "/viewEditNotes.jsp");
             request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
 
+        }
+
+        if (action.equals("/saveNotes")){
+            System.out.println("entrée dans saveNotes");
+            Enumeration<String> ids = request.getParameterNames();
+            String id = null;
+            Long id_long = null;
+            String note = null;
+            while (ids.hasMoreElements()){
+                id = ids.nextElement();
+                id_long = Long.valueOf(id);
+                EtudiantDAO.updateNote(id_long, Integer.parseInt(request.getParameter(id)));
+            }
+        }
+
+        if (action.equals("/consulterAbsences")){
+            System.out.println("entrer dans controleur consulter absences");
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("content", "/viewConsulteAbsences.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+        }
+
+        if (action.equals("/editerAbsences")){
+            System.out.println("entrer dans controleur editAbsences");
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("content", "/viewEditAbsences.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+            }
+
+        if (action.equals("/saveAbsences")){
+            System.out.println("entrée dans saveAbsences");
+            Enumeration<String> ids = request.getParameterNames();
+            String id = null;
+            Long id_long = null;
+            String note = null;
+            while (ids.hasMoreElements()){
+                id = ids.nextElement();
+                id_long = Long.valueOf(id);
+                EtudiantDAO.updateAbsence(id_long, Integer.parseInt(request.getParameter(id)));
+                }
         }
 
         if (uri.contains("groupe")){

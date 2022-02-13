@@ -64,6 +64,20 @@ public class EtudiantDAO {
 
     }
 
+    public static void updateNote(long id, int moyenne){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+        Etudiant etudiant =  em.find(Etudiant.class, id);;
+
+
+        etudiant.setMoyenne(moyenne);
+
+        em.getTransaction().commit();
+        em.close();
+    }
+
     /**
      * Retourne les etudiants correspondants à une page
      * @param indexPage
@@ -187,5 +201,19 @@ public class EtudiantDAO {
                 .setParameter(1, groupe_id);
 
         return q.getResultList();
+    }
+
+    public static void updateAbsence(Long id, int absence) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+        Etudiant etudiant =  em.find(Etudiant.class, id);;
+
+
+        etudiant.setNbAbsences(absence);
+
+        em.getTransaction().commit();
+        em.close();
     }
 }

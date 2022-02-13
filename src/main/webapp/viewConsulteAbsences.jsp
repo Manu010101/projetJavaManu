@@ -3,7 +3,7 @@
 
 <jsp:useBean id="groupes" type="java.util.List<com.example.projetjavamanu.Groupe>" scope="request"/>
 
-<h1>Editer les notes</h1>
+<h1>Consulter les absences</h1>
 
 <%--Filtrer par groupe--%>
 <select class="filtre" aria-label="Default select example">
@@ -21,8 +21,7 @@
 
 <script type='text/javascript'>
     // Description des urls de demande ajax
-    var urlEditNotes = "<%=application.getContextPath()%>/do/ajaxEtudiantsParGroupe";
-    var urlSaveNotes = "<%=application.getContextPath()%>/do/saveNotes";
-
+    var urlEditAbsences = "<%=application.getContextPath()%>/do/ajaxEtudiantsParGroupe";
 </script>
-<script src="<%=application.getContextPath()%>/ressources/js/editNotes.js"></script>
+
+<script src="<%=application.getContextPath()%>/ressources/js/consulterAbsences.js"></script>

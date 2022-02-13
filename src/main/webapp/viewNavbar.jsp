@@ -21,8 +21,8 @@
                     Absences
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Consulter les Absences</a>
-                    <a class="dropdown-item" href="#">Editer les Absences</a>
+                    <a class="dropdown-item" href="<%= application.getContextPath()%>/do/consulterAbsences">Consulter les Absences</a>
+                    <a class="dropdown-item" href="<%= application.getContextPath()%>/do/editerAbsences">Editer les Absences</a>
 
                 </div>
             </li>
@@ -32,7 +32,7 @@
                     Notes
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Consulter les notes</a>
+                    <a class="dropdown-item" href="<%= application.getContextPath()%>/do/consulterNotes">Consulter les notes</a>
                     <a class="dropdown-item" href="<%= application.getContextPath()%>/do/editNotes">Editer les notes</a>
 
                 </div>

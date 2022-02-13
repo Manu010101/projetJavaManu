@@ -8,7 +8,7 @@ function filtrer() {
 
     let groupe_nom = elt.value
 
-    let url=urlEditNotes + "?" + "nomGroupe=" + groupe_nom // il y aura un pb ici en prod
+    let url=urlEditAbsences + "?" + "nomGroupe=" + groupe_nom
 
     function promesseEtu(url, data) {
         return new Promise(
@@ -41,7 +41,7 @@ function filtrer() {
 
         formulaire = document.createElement("form")
         formulaire.setAttribute("method", "post")
-        formulaire.setAttribute("action", urlSaveNotes)
+        formulaire.setAttribute("action", urlSaveAbsences)
 
         //noeud table
         tableau = document.createElement("table")
@@ -56,7 +56,7 @@ function filtrer() {
 
         // noeuds td de l'en tête
 
-        champs = ["Nom", "Prénom", "Moyenne"]
+        champs = ["Nom", "Prénom", "Nb absences"]
 
         for (let i = 0; i < champs.length; i++) {
             td = document.createElement("td")
@@ -83,10 +83,10 @@ function filtrer() {
             elt_input = document.createElement("input")
             elt_input.setAttribute("type", "number")
             let etu_id = results[i][0]
-            let etu_note = results[i][1]
-            console.log("note" + etu_note)
+            let etu_abs = results[i][2]
+
             elt_input.setAttribute("name", etu_id)
-            elt_input.setAttribute("value", etu_note)
+            elt_input.setAttribute("value", etu_abs)
             td.appendChild(elt_input)
             tr.appendChild(td)
             tableau.appendChild(tr)
