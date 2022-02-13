@@ -42,6 +42,8 @@ public class GroupeDAO {
     }
 
     public static void destroy(int id){
+
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         EntityManager em = emf.createEntityManager();
 

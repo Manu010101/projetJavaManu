@@ -17,7 +17,7 @@
 
     <body>
 
-<%--    <%@ page import="com.example.projetjavamanu.Etudiant" %>--%>
+
     <%@ page import="com.example.projetjavamanu.Groupe" %>
 
 

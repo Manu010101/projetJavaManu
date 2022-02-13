@@ -244,10 +244,11 @@ public class Controleur extends HttpServlet {
             Map<String, String[]> parametres = request.getParameterMap();
             String action2 = parametres.get("action")[0];
             System.out.println("action2 :" + action2);
+            List<Groupe> groupes = null;
 
             switch (action2){
                 case "show":
-                    List<Groupe> groupes = GroupeDAO.getAll();
+                    groupes = GroupeDAO.getAll();
                     request.setAttribute("groupes", groupes);
                     request.setAttribute("content", "/viewGroupes.jsp");
                     request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
@@ -283,9 +284,19 @@ public class Controleur extends HttpServlet {
 
                 case "destroy":
 
-                    System.out.println("paramètres: " + parametres);
+
                     int id = Integer.parseInt(parametres.get("id")[0]);
-                    System.out.println("id: " + id);
+
+                    if (GroupeDAO.findById(id).getListe().size() > 0){
+                        ArrayList<String> messageErreur = new ArrayList<>();
+                        messageErreur.add("Pas possible de détruire un groupe avec des étudiants");
+                        request.setAttribute("messageErreur", messageErreur);
+                        groupes = GroupeDAO.getAll();
+                        request.setAttribute("groupes", groupes);
+                        request.setAttribute("content", "/viewGroupes.jsp");
+                        request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+                        break;
+                    };
                     GroupeDAO.destroy(id);
 
                     response.sendRedirect(request.getRequestURL() + "?action=show");
