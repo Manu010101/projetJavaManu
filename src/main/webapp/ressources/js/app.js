@@ -17,20 +17,23 @@ function filtrer() {
         nom_param = elts[i].querySelector("option").innerHTML
         valeur_param = elts[i].value
         console.log("selected: " + elts[i].querySelector("option").innerHTML)
-        donneesFiltres.push(
-            {
-                nom_param: nom_param,
-                valeur_param: valeur_param
-            }
-        )
+
+        if (nom_param != valeur_param) {//enlève les params qui ont la valeur par défaut
+            donneesFiltres.push(
+                {
+                    nom_param: nom_param,
+                    valeur_param: valeur_param
+                }
+            )
+        }
     }
 
     // Construction url avec passage des paramètres des filtres
     let url=urlgetetudiants + "?"   // il y aura un pb ici en prod
     for (let i = 0; i < donneesFiltres.length; i++) {
-        if (i == donneesFiltres.length - 1){
+        if (i == donneesFiltres.length - 1){//cas du dernier paramètre
             url += donneesFiltres[i].nom_param + "=" + donneesFiltres[i].valeur_param
-        }else {
+        }else {//cas courant
             url += donneesFiltres[i].nom_param + "=" + donneesFiltres[i].valeur_param + "&"
         }
 

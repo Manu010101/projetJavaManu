@@ -133,22 +133,15 @@ public class Controleur extends HttpServlet {
             System.out.println("entree dans async controleur");
 
             //Récupération des paramètres pour filtrer en async
-            String nom = request.getParameter("nom");
-            String moyenne = request.getParameter("moyenne");
-            String groupe = request.getParameter("groupe");
-
-            //dictionnaire de paramètres, contenant les attributs sur lesquels filtrer la requête
-            //il est rempli par les paramètres non vides
+            Enumeration<String> params_names = request.getParameterNames();
             Map<String, String> parametres = new HashMap<>();
-            if (!Objects.equals(nom, "nom")){
-                parametres.put("nom", nom);
+
+            while (params_names.hasMoreElements()){
+                String param_name = params_names.nextElement();
+                parametres.put(param_name, request.getParameter(param_name));
             }
-            if (!Objects.equals(moyenne, "moyenne")){
-                parametres.put("moyenne", moyenne);
-            }
-            if (!Objects.equals(groupe, "groupe")){
-                parametres.put("GROUPE_ID", groupe);
-            }
+
+            System.out.println("paramètres" + parametres);
 
             List<Etudiant> etudiants = EtudiantDAO.queryFiltree(parametres);
 
@@ -331,9 +324,3 @@ public class Controleur extends HttpServlet {
         return nbPages;
     }
 }
-//--
-//TODO: Nettoyer le controleur:
-// - passage à redirect
-// - utilisation de switch pour Etudiant
-// - inclure les beans groupes pour pagination (sinon crash)
-//--

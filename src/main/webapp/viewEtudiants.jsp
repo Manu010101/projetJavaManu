@@ -16,7 +16,7 @@
             <select class="filtre" aria-label="Default select example">
                 <option selected>groupe</option>
                 <% for (Groupe groupe: groupes) { %>
-                <option><%= groupe.getId()%></option>
+                <option><%= groupe.getNom()%></option>
                 <% } %>
             </select>
 
