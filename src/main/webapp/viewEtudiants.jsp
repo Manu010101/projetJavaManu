@@ -3,9 +3,11 @@
 
 <%@ page import="com.example.projetjavamanu.Etudiant" %>
 <%@ page import="com.example.projetjavamanu.Groupe" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.*" %>
 <jsp:useBean id="etudiants" type="java.util.List<com.example.projetjavamanu.Etudiant>" scope="request"/>
 <jsp:useBean id="groupes" type="java.util.List<com.example.projetjavamanu.Groupe>" scope="request"/>
+<jsp:useBean id="lettres" type="java.util.ArrayList<java.lang.Character>" scope="request" />
+<jsp:useBean id="moyennes" type="java.util.ArrayList<java.lang.Integer>" scope="request" />
 
     <div class="container">
 
@@ -28,33 +30,19 @@
                 <select class="filtre" aria-label="Default select example">
                     <option selected>nom</option>
                     <%
-                         ArrayList<Character> lettres = new ArrayList<>();
-                        for (Etudiant etudiant:etudiants) {
-                            String nom = etudiant.getNom();
-                            System.out.println(nom);
-                            char lettre = nom.charAt(0);
-                            if (!lettres.contains(lettre)){
-                                lettres.add(lettre);
-                            }
-                        }
                         if (lettres.size() > 1){
-
-                            for (Character l:lettres) {
-                                System.out.println("ch" + l);
-                            }}
-
                             for (Character l:lettres) { %>
                                 <option><%= l %></option>
                         <%
-                        } %>
+                        }}%>
                 </select>
             </div>
 
             <div class="col">
                 <select class="filtre" aria-label="Default select example">
                     <option selected>moyenne</option>
-                    <% for (Etudiant etudiant: etudiants) { %>
-                    <option><%= etudiant.getMoyenne() %></option>
+                    <% for (int moyenne: moyennes) { %>
+                    <option><%= moyenne %></option>
                     <% } %>
                 </select>
             </div>
@@ -96,9 +84,15 @@
 
                 </tbody>
             </table>
+
+            <%@ include file="viewBarrePagination.jsp"%>
+
         </div>
 
-        <%@ include file="viewBarrePagination.jsp"%>
+
+
+
+
 
     </div>
     <script type='text/javascript'>

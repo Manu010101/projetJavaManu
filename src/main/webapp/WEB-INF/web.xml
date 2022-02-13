@@ -7,12 +7,24 @@
 
     <filter>
         <filter-name>FilterForm</filter-name>
-        <filter-class>com.example.projetjavamanu.FilterForm</filter-class>
+        <filter-class>com.example.projetjavamanu.FilterFormCreate</filter-class>
     </filter>
 
     <filter-mapping>
         <filter-name>FilterForm</filter-name>
         <url-pattern>/do/save</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>FilterNotes</filter-name>
+        <filter-class>FilterFormNotes</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>FilterNotes</filter-name>
+        <url-pattern>/do/saveNotes</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
     </filter-mapping>

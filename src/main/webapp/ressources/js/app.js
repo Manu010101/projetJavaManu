@@ -64,6 +64,7 @@ function filtrer() {
     }
 
     function success(results){
+
         console.log("resultats :" + results)
         let tableau = document.querySelector("table")
         tableau.innerHTML = ""
@@ -104,6 +105,7 @@ function filtrer() {
                 tr.appendChild(td)
             }
             tableau.appendChild(tr)
+
         }
 
 

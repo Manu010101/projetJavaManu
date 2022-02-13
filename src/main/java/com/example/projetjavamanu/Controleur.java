@@ -129,6 +129,9 @@ public class Controleur extends HttpServlet {
             rendVuePaginee(request, response, index);
         }
 
+        /**
+         * Fonction call quand requete Ajax pour filtrer les étudiants selon plusieurs paramètres
+         */
         if (action.equals("/ajax")){
             System.out.println("entree dans async controleur");
 
@@ -153,7 +156,9 @@ public class Controleur extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
         }
-
+        /**
+         * Fonction qui retourne les étudiants filtrés par un groupe
+         */
         if (action.equals("/ajaxEtudiantsParGroupe")){
 
             Groupe groupe = GroupeDAO.findByNom(request.getParameter("nomGroupe"));
@@ -237,7 +242,9 @@ public class Controleur extends HttpServlet {
             request.setAttribute("content", "/viewConsulteAbsences.jsp");
             request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
         }
-
+        /**
+         * Partie qui gère le CRUD groupe
+         */
         if (uri.contains("groupe")){
 //            TODO: avec utilisation de switch pb de scope - on peut pas redefinir groupes...
             System.out.println("passage dans groupe");
@@ -310,6 +317,15 @@ public class Controleur extends HttpServlet {
 
     }
 
+    /**
+     * Fonction qui retoune une jsp contenant les étudiants paginés
+     * Transporte des informations (via des setAttribute) pour pouvoir filtrer
+     * @param request
+     * @param response
+     * @param index n° de page demandée
+     * @throws ServletException
+     * @throws IOException
+     */
     private void rendVuePaginee(HttpServletRequest request, HttpServletResponse response, int index) throws ServletException, IOException {
         List<Etudiant> etudiants = EtudiantDAO.getPage(index);
         int nbPages = this.calculerNbPages();
@@ -321,6 +337,32 @@ public class Controleur extends HttpServlet {
         request.setAttribute("groupes", groupes);
         request.setAttribute("etudiants", etudiants);
         request.setAttribute("content", "/viewEtudiants.jsp");
+
+
+        //Partie pour donner les valeurs possibles des filtres
+
+        //filtre sur les noms
+        ArrayList<Character> lettres = new ArrayList<>();
+        for (Etudiant etudiant:EtudiantDAO.getAll()) {
+            String nom = etudiant.getNom();
+            System.out.println(nom);
+            char lettre = nom.charAt(0);
+            if (!lettres.contains(lettre)){
+                lettres.add(lettre);
+            }
+        }
+        request.setAttribute("lettres", lettres);
+
+        //filtre sur les notes
+        ArrayList<Integer> moyennes = new ArrayList<>();
+        for (Etudiant etudiant:EtudiantDAO.getAll()) {
+            int moyenne = etudiant.getMoyenne();
+            if (!moyennes.contains(moyenne)){
+                moyennes.add(moyenne);
+            }
+        }
+        request.setAttribute("moyennes", moyennes);
+
         request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
     }
 

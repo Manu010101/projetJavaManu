@@ -1,8 +1,6 @@
 package com.example.projetjavamanu;
 
 import jakarta.servlet.*;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +8,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 
-public class FilterForm implements Filter {
+public class FilterFormCreate implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
 

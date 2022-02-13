@@ -63,7 +63,6 @@
                     </div>
 
                     <input type="submit" class="btn btn-primary" value="Valider">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 
                 </form>
 

@@ -190,7 +190,11 @@ public class EtudiantDAO {
         return nbElts > 0;
     }
 
-
+    /**
+     * Fonction retournant les étudiants appartenant au groupe en paramètre
+     * @param groupe_id
+     * @return
+     */
     public static List<Etudiant> getEtudiantsByGroupe(int groupe_id){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         EntityManager em = emf.createEntityManager();
