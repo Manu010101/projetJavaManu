@@ -9,7 +9,7 @@
 <body>
     <jsp:useBean id="etudiant" type="com.example.projetjavamanu.Etudiant" scope="request"/>
 
-    <form method="post" action="<%= application.getContextPath()%>/do/update?id=<%=etudiant.getId()%>">
+    <form method="post" action="<%= application.getContextPath()%>/do/update?id=<%=etudiant.getId()%>&index=<%=request.getAttribute("index") %>">
     <div class="form-group">
         <label>Nom
             <input type="text" class="form-control" id="nom"  name="nom" placeholder="Enter nom" value="<%= etudiant.getNom() %>">

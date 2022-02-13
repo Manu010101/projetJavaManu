@@ -88,7 +88,7 @@ public class EtudiantDAO {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         EntityManager em = emf.createEntityManager();
 
-        int nbEltParPage = 2;
+        int nbEltParPage = 3;
         int firstElt = (indexPage >  0) ?  (indexPage - 1) * nbEltParPage :  0
         ;
         Query q = em.createQuery("SELECT e FROM Etudiant e")
@@ -97,7 +97,6 @@ public class EtudiantDAO {
         System.out.println("query page: " + q);
 
         List<Etudiant> etudiants = q.getResultList();
-        System.out.println("etudiants paginés " + etudiants);
         return etudiants;
     }
 

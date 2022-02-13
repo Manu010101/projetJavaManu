@@ -1,14 +1,14 @@
 package com.example.projetjavamanu;
 
-import java.io.*;
-import java.util.*;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.*;
 
 public class Controleur extends HttpServlet {
 
@@ -81,16 +81,7 @@ public class Controleur extends HttpServlet {
             System.out.println("passage dans show");
 
             int index = 1;
-            List<Etudiant> etudiants = EtudiantDAO.getPage(index);
-            int nbPages = this.calculerNbPages();
-            request.setAttribute("nbPages", nbPages);
-
-            List<Groupe> groupes = GroupeDAO.getAll();
-            request.setAttribute("groupes", groupes);
-
-            request.setAttribute("etudiants", etudiants);
-            request.setAttribute("content", "/viewEtudiants.jsp");
-            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+            rendVuePaginee(request, response, index);
 
         }
 
@@ -99,20 +90,15 @@ public class Controleur extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             System.out.println("passage dans destroy");
             EtudiantDAO.destroy(id);
-            List<Etudiant> etudiants = EtudiantDAO.getAll();
-            List<Groupe> groupes = GroupeDAO.getAll();
-            int nbPages = this.calculerNbPages();
-            request.setAttribute("nbPages", nbPages);
-            request.setAttribute("etudiants", etudiants);
-            request.setAttribute("groupes", groupes);
-            request.setAttribute("content", "/viewEtudiants.jsp");
-            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+            int index = Integer.parseInt(request.getParameter("index"));
+            rendVuePaginee(request, response, index);
 
         }
 
         if (action.equals("/edit")){
             long id = Long.parseLong(request.getParameter("id"));
             Etudiant etudiant = EtudiantDAO.findById(id);
+            request.setAttribute("index", request.getParameter("index"));
             request.setAttribute("etudiant", etudiant);
             request.setAttribute("content", "/viewUpdateEtudiant.jsp");
             request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
@@ -121,23 +107,16 @@ public class Controleur extends HttpServlet {
         if(action.equals("/update")){
 
             long id = Long.parseLong(request.getParameter("id"));
-            System.out.println("passage dans update avec id = " + id);
-
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
+            int index = Integer.parseInt(request.getParameter("index"));
+            System.out.println("index dans update=" + index);
 
             int moyenne = Integer.parseInt(request.getParameter("moyenne"));
             int nbAbsences = Integer.parseInt(request.getParameter("nbAbsences"));
 
             EtudiantDAO.update(id, nom, prenom, moyenne,nbAbsences);
-            List<Etudiant> etudiants = EtudiantDAO.getAll();
-            int nbPages = this.calculerNbPages();
-            List<Groupe> groupes = GroupeDAO.getAll();
-            request.setAttribute("groupes", groupes);
-            request.setAttribute("nbPages", nbPages);
-            request.setAttribute("etudiants", etudiants);
-            request.setAttribute("content", "/viewEtudiants.jsp");
-            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+            rendVuePaginee(request, response, index);
 
 
         }
@@ -147,16 +126,7 @@ public class Controleur extends HttpServlet {
             int index = Integer.parseInt(request.getParameter("index"));
             System.out.println("passage dans ctrlr page avec index = " + index);
 
-            List<Etudiant> etudiants = EtudiantDAO.getPage(index);
-            int nbPages = this.calculerNbPages();
-            request.setAttribute("nbPages", nbPages);
-
-            List<Groupe> groupes = GroupeDAO.getAll();
-            request.setAttribute("groupes", groupes);
-
-            request.setAttribute("etudiants", etudiants);
-            request.setAttribute("content", "/viewEtudiants.jsp");
-            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+            rendVuePaginee(request, response, index);
         }
 
         if (action.equals("/ajax")){
@@ -330,6 +300,20 @@ public class Controleur extends HttpServlet {
 
     }
 
+    private void rendVuePaginee(HttpServletRequest request, HttpServletResponse response, int index) throws ServletException, IOException {
+        List<Etudiant> etudiants = EtudiantDAO.getPage(index);
+        int nbPages = this.calculerNbPages();
+        request.setAttribute("nbPages", nbPages);
+
+        List<Groupe> groupes = GroupeDAO.getAll();
+
+        request.setAttribute("index", index);
+        request.setAttribute("groupes", groupes);
+        request.setAttribute("etudiants", etudiants);
+        request.setAttribute("content", "/viewEtudiants.jsp");
+        request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+    }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 
         doGet(request, response);
@@ -342,7 +326,7 @@ public class Controleur extends HttpServlet {
     public int calculerNbPages(){
 
         int nbEtudiants = EtudiantDAO.count();
-        int nbEtudiantsPage = 2;
+        int nbEtudiantsPage = 3;
         int nbPages = (int) Math.ceil((float) nbEtudiants / nbEtudiantsPage);
         return nbPages;
     }

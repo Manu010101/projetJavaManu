@@ -75,8 +75,8 @@
                     <td><%=etudiant.getMoyenne()%></td>
                     <td><%=etudiant.getNbAbsences()%></td>
                     <td><%=etudiant.getGroupe().getNom()%></td>
-                    <td><a href="<%= application.getContextPath()%>/do/edit?id=<%= etudiant.getId() %>" class="btn btn-info">maj</a></td>
-                    <td><a href="<%= application.getContextPath()%>/do/destroy?id=<%= etudiant.getId() %>" class="btn btn-danger">Supprimer</a></td>
+                    <td><a href="<%= application.getContextPath()%>/do/edit?id=<%= etudiant.getId() %>&index=<%= request.getAttribute("index") %>" class="btn btn-info">maj</a></td>
+                    <td><a href="<%= application.getContextPath()%>/do/destroy?id=<%= etudiant.getId() %>&index=<%= request.getAttribute("index") %>" class="btn btn-danger">Supprimer</a></td>
                 </tr>
 
                 <% } %>
