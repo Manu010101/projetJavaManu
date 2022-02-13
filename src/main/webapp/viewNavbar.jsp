@@ -5,7 +5,7 @@
         <ul class="navbar-nav mr-auto">
 
             <li class="nav-item active">
-                <a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="<%= application.getContextPath()%>/do/accueil">Accueil <span class="sr-only">(current)</span></a>
             </li>
 
             <li class="nav-item">

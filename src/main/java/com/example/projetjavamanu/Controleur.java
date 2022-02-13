@@ -29,9 +29,9 @@ public class Controleur extends HttpServlet {
         System.out.println("uri: " + uri);
         System.out.println("url: " + uri);
 
-        if (action.equals("/acceuil")){
-            RequestDispatcher rq = request.getRequestDispatcher("/viewLayout.jsp");
-            rq.forward(request, response);
+        if (action.equals("/accueil")){
+            request.setAttribute("content", "/viewAccueil.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
         }
 
         if (action.equals("/create")){
@@ -79,18 +79,19 @@ public class Controleur extends HttpServlet {
         //old
         if (action.equals("/show")){
             System.out.println("passage dans show");
+
+            int index = 1;
+            List<Etudiant> etudiants = EtudiantDAO.getPage(index);
             int nbPages = this.calculerNbPages();
-            List<Etudiant> etudiants = EtudiantDAO.getAll();
+            request.setAttribute("nbPages", nbPages);
+
             List<Groupe> groupes = GroupeDAO.getAll();
             request.setAttribute("groupes", groupes);
 
-            // Ajouter les étudiants à la requête pour affichage
             request.setAttribute("etudiants", etudiants);
-            request.setAttribute("nbPages", nbPages);
             request.setAttribute("content", "/viewEtudiants.jsp");
-            System.out.println("requete: bean" + request);
-            System.out.println("/show etudiants:" + etudiants.toString());
             request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+
         }
 
         if(action.equals("/destroy")){
@@ -235,6 +236,10 @@ public class Controleur extends HttpServlet {
                 id_long = Long.valueOf(id);
                 EtudiantDAO.updateNote(id_long, Integer.parseInt(request.getParameter(id)));
             }
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("content", "/viewConsulteNotes.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
         }
 
         if (action.equals("/consulterAbsences")){
@@ -264,6 +269,10 @@ public class Controleur extends HttpServlet {
                 id_long = Long.valueOf(id);
                 EtudiantDAO.updateAbsence(id_long, Integer.parseInt(request.getParameter(id)));
                 }
+            List<Groupe> groupes = GroupeDAO.getAll();
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("content", "/viewConsulteAbsences.jsp");
+            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
         }
 
         if (uri.contains("groupe")){
@@ -317,10 +326,6 @@ public class Controleur extends HttpServlet {
 
 
             }
-        }
-
-        else {
-            request.getServletContext().getRequestDispatcher("/index.jsp");
         }
 
     }
