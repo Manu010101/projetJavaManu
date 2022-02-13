@@ -64,16 +64,8 @@ public class Controleur extends HttpServlet {
 
             EtudiantDAO.create(e);
 
-            List<Etudiant> etudiants = EtudiantDAO.getAll();
-            List<Groupe> groupes = GroupeDAO.getAll();
-
-            int nbPages = this.calculerNbPages();
-            request.setAttribute("nbPages", nbPages);
-            request.setAttribute("etudiants", etudiants);
-
-            request.setAttribute("groupes", groupes);
-            request.setAttribute("content", "/viewEtudiants.jsp");
-            request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+            int index = 1;
+            rendVuePaginee(request, response, index);
 
         }
 
