@@ -32,9 +32,9 @@
     <thead>
     <tr>
         <td>Nom</td>
-        <td>Etudiants</td>
         <td>maj</td>
         <td>suppr</td>
+        <td>Etudiants</td>
     </tr>
     </thead>
 
@@ -43,11 +43,11 @@
 
     <tr>
         <td><%=groupe.getNom()%></td>
-        <% for (Etudiant etudiant: groupe.getListe()) {%>
-            <td><%= etudiant.getPrenom()%></td>
-        <% } %>
         <td><a href="<%= application.getContextPath()%>/groupe/?action=edit&id=<%= groupe.getId() %>" class="btn btn-info">maj</a></td>
         <td><a href="<%= application.getContextPath()%>/groupe/?action=destroy&id=<%= groupe.getId() %>" class="btn btn-danger">Supprimer</a></td>
+        <% for (Etudiant etudiant: groupe.getListe()) {%>
+        <td><%= etudiant.getPrenom()%></td>
+        <% } %>
     </tr>
 
     <% } %>
@@ -56,8 +56,6 @@
 </table>
 
 <%@ include file="viewCreateGroupe.jsp" %>
-
-<%@ include file="viewNavbar.jsp" %>
 
 </body>
 </html>

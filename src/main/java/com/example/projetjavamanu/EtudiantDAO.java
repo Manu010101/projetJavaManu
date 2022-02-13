@@ -141,12 +141,15 @@ public class EtudiantDAO {
         //remplissage d'un tableau contenant les bouts de conditions
         for (String key:params.keySet()) {
             if (key.equals("nom")){
-                conditions.add(" Etudiant.nom LIKE '?" + " %'");
+                conditions.add(" Etudiant.nom LIKE '"+ params.get(key) + "%'");
             }
             if (key.equals("groupe")){
                 System.out.println("nom du groupe =" + key);
                 String groupeId = String.valueOf(GroupeDAO.findByNom(params.get(key)).getId());
                 conditions.add(" Etudiant.GROUPE_ID" + " = " + groupeId);
+            }
+            if (key.equals("moyenne")){
+                conditions.add(" Etudiant.moyenne" + " = " +  params.get(key));
             }
         }
 
@@ -157,13 +160,7 @@ public class EtudiantDAO {
             else raw += conditions.get(i) + ")";
         }
 
-
         Query q = em.createNativeQuery(raw);
-
-        for (String key:params.keySet()) {
-            q.setParameter(key, params.get(key));
-        }
-
 
         System.out.println("query = " + raw);
 

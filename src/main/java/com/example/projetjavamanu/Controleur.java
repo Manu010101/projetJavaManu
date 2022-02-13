@@ -76,7 +76,7 @@ public class Controleur extends HttpServlet {
             request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
 
         }
-        //old
+
         if (action.equals("/show")){
             System.out.println("passage dans show");
 
@@ -244,15 +244,19 @@ public class Controleur extends HttpServlet {
             Map<String, String[]> parametres = request.getParameterMap();
             String action2 = parametres.get("action")[0];
             System.out.println("action2 :" + action2);
+
             switch (action2){
                 case "show":
                     List<Groupe> groupes = GroupeDAO.getAll();
                     request.setAttribute("groupes", groupes);
-                    request.getServletContext().getRequestDispatcher("/viewGroupes.jsp").forward(request, response);
+                    request.setAttribute("content", "/viewGroupes.jsp");
+                    request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
                     break;
 
                 case "create":
-                    request.getServletContext().getRequestDispatcher("/viewCreateGroupe.jsp").forward(request, response);
+
+                    request.setAttribute("content", "/viewCreateGroupe.jsp");
+                    request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
                     break;
 
                 case "save":
@@ -267,7 +271,9 @@ public class Controleur extends HttpServlet {
 
                     Groupe groupe = GroupeDAO.findById(Long.parseLong(request.getParameter("id")));
                     request.setAttribute("groupe", groupe);
-                    request.getServletContext().getRequestDispatcher("/viewUpdateGroupe.jsp").forward(request, response);
+                    request.setAttribute("content", "/viewUpdateGroupe.jsp");
+                    request.getServletContext().getRequestDispatcher("/viewLayout.jsp").forward(request, response);
+                    break;
 
                 case "update":
 

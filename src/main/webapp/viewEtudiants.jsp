@@ -9,49 +9,62 @@
 
     <div class="container">
 
-        <div>
+        <div class="row" style="margin: 5px">
 
-            <a href="<%= application.getContextPath()%>/do/create" class="btn-primary">Créer étudiant</a>
+            <div class="col">
+                <a href="<%= application.getContextPath()%>/do/create" class="btn btn-primary">Créer étudiant</a>
+            </div>
 
-            <select class="filtre" aria-label="Default select example">
-                <option selected>groupe</option>
-                <% for (Groupe groupe: groupes) { %>
-                <option><%= groupe.getNom()%></option>
-                <% } %>
-            </select>
+            <div class="col">
+                <select class="filtre" aria-label="Default select example">
+                    <option selected>groupe</option>
+                    <% for (Groupe groupe: groupes) { %>
+                    <option><%= groupe.getNom()%></option>
+                    <% } %>
+                </select>
+            </div>
 
-            <select class="filtre" aria-label="Default select example">
-                <option selected>nom</option>
-                <%
-                     ArrayList<Character> lettres = new ArrayList<>();
-                    for (Etudiant etudiant:etudiants) {
-                        String nom = etudiant.getNom();
-                        System.out.println(nom);
-                        char lettre = nom.charAt(0);
-                        if (!lettres.contains(lettre)){
-                            lettres.add(lettre);
-                        }
-                    }
-                    if (lettres.size() > 1){
-
-                        for (Character l:lettres) {
-                            System.out.println("ch" + l);
-                        }}
-
-                        for (Character l:lettres) { %>
-                            <option><%= l %></option>
+            <div class="col">
+                <select class="filtre" aria-label="Default select example">
+                    <option selected>nom</option>
                     <%
-                    } %>
-            </select>
+                         ArrayList<Character> lettres = new ArrayList<>();
+                        for (Etudiant etudiant:etudiants) {
+                            String nom = etudiant.getNom();
+                            System.out.println(nom);
+                            char lettre = nom.charAt(0);
+                            if (!lettres.contains(lettre)){
+                                lettres.add(lettre);
+                            }
+                        }
+                        if (lettres.size() > 1){
 
-            <select class="filtre" aria-label="Default select example">
-                <option selected>moyenne</option>
-                <% for (Etudiant etudiant: etudiants) { %>
-                <option><%= etudiant.getMoyenne() %></option>
-                <% } %>
-            </select>
+                            for (Character l:lettres) {
+                                System.out.println("ch" + l);
+                            }}
+
+                            for (Character l:lettres) { %>
+                                <option><%= l %></option>
+                        <%
+                        } %>
+                </select>
+            </div>
+
+            <div class="col">
+                <select class="filtre" aria-label="Default select example">
+                    <option selected>moyenne</option>
+                    <% for (Etudiant etudiant: etudiants) { %>
+                    <option><%= etudiant.getMoyenne() %></option>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="col">
+                <a href="<%= application.getContextPath()%>/do/show" class="btn btn-info">Annuler les filtres</a>
+            </div>
 
         </div>
+
         <div class="principale">
             <table class="table">
                 <thead>
@@ -92,4 +105,5 @@
         // Description des urls de demande ajax
         var urlgetetudiants = "<%=application.getContextPath()%>/do/ajax";
     </script>
+
     <script src="<%=application.getContextPath()%>/ressources/js/app.js"></script>

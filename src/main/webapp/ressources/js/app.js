@@ -38,6 +38,7 @@ function filtrer() {
         }
 
     }
+
     console.log("url= " + url)
 
     function promesseEtu(url, data) {
@@ -62,13 +63,58 @@ function filtrer() {
         )
     }
 
-    function success(result){console.log("Nickel: " + result)}
+    function success(results){
+        console.log("resultats :" + results)
+        let tableau = document.querySelector("table")
+        tableau.innerHTML = ""
+
+        thead = document.createElement("thead")
+
+        //noeud tr de thead
+
+        tr_thead = document.createElement("tr")
+
+        // noeuds td de l'en tête
+
+        champs = ["Nom", "Prenom", "Moyenne", "Nombre absences", "Id groupe"]
+        //construction en-tete
+        for (let i = 0; i < champs.length; i++) {
+            td = document.createElement("td")
+            td.innerHTML = champs[i]
+            tr_thead.appendChild(td)
+        }
+
+        thead.appendChild(tr_thead)
+        tableau.appendChild(thead)
+
+        //construction ligne courante
+        for (let i = 0; i < results.length; i++) {
+            tr = document.createElement("tr")
+            etudiant_attributs = [
+                nom = results[i][3],
+                prenom = results[i][4],
+                moyenne = results[i][1],
+                nb_absences = results[i][2],
+                groupe = results[i][5]
+            ]
+
+            for (let j = 0; j < etudiant_attributs.length; j++) {
+                td = document.createElement("td")
+                td.innerHTML = etudiant_attributs[j]
+                tr.appendChild(td)
+            }
+            tableau.appendChild(tr)
+        }
+
+
+
+    }
 
     //requete Ajax
 
     promesseEtu(url)
-        .then(data => {console.log("succes :" + data)})
-        .catch(e => console.log("erreur catch by manu" + e))
+        .then(data => success(data))
+        .catch(e => console.log("erreur :" + e))
 
 }
 
